@@ -1,0 +1,14 @@
+How to look for DSO’s tables?
+
+There is a nice and useful functionality available in TA RSA1 to access data in DSO across its all 3 tables (in case of normal DSO): New, Active and Change Log. If you navigate into InfoProviders section in Modeling area and you choose right mouse click on particular DSO you select Manage menu. There is a tab strip called Content. 
+Here you can specify particular data you are interested in:
+
+New data - contents of the activation queue
+Active data – contents of A table = active data
+Change log – contents of change log table
+
+So this is easy part. But what to do in case you need to determine DSO table via runtime in your custom ABAP? In this case we can use information stored in field ODSNAME_TECH in table RSTSODS. Or there is a nice tiny standard ABAP method provided called get_tablnm from class cl_rsd_odso.
+
+And what about I just want to quickly see DSO data in data dictionary transactions like SE11 or SE16? Here’s hint: put a prefix /BIC/A or /BI0 in front of DSO and you get active table. Here you need to recognize either you looking for table of Business Content DSO or custom created one:
+
+for Business Content DSO replace /BIC/ with /BI0/.
