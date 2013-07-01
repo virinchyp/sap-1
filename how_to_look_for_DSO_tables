@@ -12,3 +12,5 @@ So this is easy part. But what to do in case you need to determine DSO table via
 And what about I just want to quickly see DSO data in data dictionary transactions like SE11 or SE16? Here’s hint: put a prefix /BIC/A or /BI0 in front of DSO and you get active table. Here you need to recognize either you looking for table of Business Content DSO or custom created one:
 
 for Business Content DSO replace /BIC/ with /BI0/.
+
+Source: http://sapport.blogspot.com/2010/11/how-to-look-for-dsos-tables.html
