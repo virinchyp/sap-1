@@ -1,0 +1,51 @@
+RSTRAN     Transformation
+
+RSTRAN_R_CURR     Currency Translations for Transformation R
+
+RSTRAN_R_IOBJ     InfoObjects for UnitTest Transformation Ru
+
+RSTRAN_R_TEST     UnitTest Transformation Runtime
+
+RSTRAN_R_UNIT     Unit Conversions for Transformation Runtim
+
+RSTRAN_RTO     Runtime Object of Transformation
+
+RSTRAN_RTO_HDR     Header Information for Transformation Runt
+
+RSTRAN_STEPTPL_R     Runtime: Template STEP Type Relations
+
+RSTRAN_STEPTYP_R     Runtime: Sections for STEP Type
+
+RSTRANAPPEND     Assignment of Transformation - Appends
+
+RSTRANENQ     Lock Entries for Transformation
+
+RSTRANFIELD     Mapping of Rule Parameters - Structure Fie
+
+RSTRANFIELDPROP     Field Properties Within Transformation
+
+RSTRANGROUPT     Transformation Texts
+
+RSTRANIF     Table for Source/Target Interface
+
+RSTRANROUTMAP     Rule Type: Routine
+
+RSTRANRULE     Transformation Rule
+
+RSTRANRULE_TEST     Mapping Table for Single Rule Simulation
+
+RSTRANRULESTEP     Rule Steps for a Transformation Rule
+
+RSTRANRULET     Texts for a Transformation Rule
+
+RSTRANSEG     Used segments
+
+RSTRANSTEPCNST     Rule Type: Constant
+
+RSTRANSTEPIOBJ     Rule Step: InfoObject Assignment
+
+RSTRANSTEPMAP     Mapping for Rule Step Within a Rule
+
+RSTRANSTEPMASTER     Rule Type: Read Master Data
+
+RSTRANSTEPMOVE     Rule Type: Direct or MOVE
