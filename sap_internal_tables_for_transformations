@@ -1,51 +1,47 @@
-RSTRAN     Transformation
 
-RSTRAN_R_CURR     Currency Translations for Transformation R
+    RSTRAN : Transformation  BW - Data Staging 
+    RSTRANRULE : Transformation Rule  BW - Data Staging 
+    DMUPOB : DMU item object (head for DMU transformation matrices)  Logistics - Product Data Management 
+    DMUTMX : Transformation matrix parameter in STEP format(ISO 10303-42)  Logistics - Product Data Management 
+    EUITRANS : Transformation of Internal/External Point of Delivery No.  IS - Point of delivery 
+    RSTRANRULESTEP : Rule Steps for a Transformation Rule  BW - Data Staging 
+    RSTRANT : Transformation Texts  BW - Data Staging 
+    RSBTRANSFIELD : Target Structure InfoObjects for Open Hub Transformation  BW - Data Basis 
+    RSTRANFIELDPROP : Field Properties Within Transformation  BW - Data Staging 
+    RSTRANGROUPT : Transformation Texts  BW - Data Staging 
+    RSTRANRULET : Texts for a Transformation Rule  BW - Data Staging 
+    J_3R_PBU_TCODES : Transformation codes for data transfer to FI-SL for PBU18  FI - Localization 
+    VEPFUNCST : Simple Transformation of VI _function  Basis - Web Service Tools - ABAP 
+    MRTRSC_20 : Define Control Parameters for Master Recipe Transformation  Product Lifecycle Management - Recipe Management 
+    MRTRST_HDR : RMS-MRTRS : MR Transformation Header  Product Lifecycle Management - Recipe Management 
+    RSTRANENQ : Lock Entries for Transformation  BW - Data Staging 
+    RSTRAN_RTO : Runtime Object of Transformation  BW - Data Staging 
+    RSTRAN_RTO_HDR : Header Information for Transformation Runtime Object  BW - Data Staging 
+    RSTRAN_R_CURR : Currency Translations for Transformation Runtime Unit Test  BW - Data Staging 
+    RSTRAN_R_IOBJ : InfoObjects for UnitTest Transformation Runtime  BW - Data Staging 
+    RSTRAN_R_TEST : UnitTest Transformation Runtime  BW - Data Staging 
+    RSTRAN_R_UNIT : Unit Conversions for Transformation Runtime Unit Test  BW - Data Staging 
+    DMC_FMSEQ : DMC: Transformations; Order of the Function Modules  Basis - Data Conversion 
 
-RSTRAN_R_IOBJ     InfoObjects for UnitTest Transformation Ru
+    ------ More SAP "transformation" tables -----
 
-RSTRAN_R_TEST     UnitTest Transformation Runtime
+    RSTRAN - Transformation  BW - Data Staging 
+    RSDS - DataSource in BW  BW - Data Staging 
+    RSTRANRULE - Transformation Rule  BW - Data Staging 
+    RSTRANFIELD - Mapping of Rule Parameters - Structure Fields  BW - Data Staging 
+    RSUPDSIMULH - Table for saving simulation data header information  BW - Data Staging 
+    RSOSFIELDMAP - Mapping Between OLTP Source Fields and InfoObjects  BW - Data Staging 
+    RSLOGSYSMAP - Mapping of logical systems fir transport of InfoSources  BW - Data Staging 
+    RSTRANRULESTEP - Rule Steps for a Transformation Rule  BW - Data Staging 
+    RSBKDTP - BW: Data Transfer Process Header Data  BW - Data Staging 
+    RSTRANSTEPROUT - Rule Type: Routine  BW - Data Staging 
+    RSTRANSTEPMAP - Mapping for Rule Step Within a Rule  BW - Data Staging 
+    RSTSRULES - Transfer structure transfer rules  BW - Data Staging 
+    RSISOSMAP - Mapping Between InfoSources and OLTP Sources  BW - Data Staging 
+    RSTRANROUTMAP - Rule Type: Routine  BW - Data Staging 
+    SFOBUEV000 - FoBuEv: Header Data of a Formula  Basis - BRFplus - ABAP-Based Business Rules 
 
-RSTRAN_R_UNIT     Unit Conversions for Transformation Runtim
 
-RSTRAN_RTO     Runtime Object of Transformation
+Read more: http://www.tcodesearch.com/sap-tables/search?q=transformation#ixzz2fLBkdaNg
 
-RSTRAN_RTO_HDR     Header Information for Transformation Runt
-
-RSTRAN_STEPTPL_R     Runtime: Template STEP Type Relations
-
-RSTRAN_STEPTYP_R     Runtime: Sections for STEP Type
-
-RSTRANAPPEND     Assignment of Transformation - Appends
-
-RSTRANENQ     Lock Entries for Transformation
-
-RSTRANFIELD     Mapping of Rule Parameters - Structure Fie
-
-RSTRANFIELDPROP     Field Properties Within Transformation
-
-RSTRANGROUPT     Transformation Texts
-
-RSTRANIF     Table for Source/Target Interface
-
-RSTRANROUTMAP     Rule Type: Routine
-
-RSTRANRULE     Transformation Rule
-
-RSTRANRULE_TEST     Mapping Table for Single Rule Simulation
-
-RSTRANRULESTEP     Rule Steps for a Transformation Rule
-
-RSTRANRULET     Texts for a Transformation Rule
-
-RSTRANSEG     Used segments
-
-RSTRANSTEPCNST     Rule Type: Constant
-
-RSTRANSTEPIOBJ     Rule Step: InfoObject Assignment
-
-RSTRANSTEPMAP     Mapping for Rule Step Within a Rule
-
-RSTRANSTEPMASTER     Rule Type: Read Master Data
-
-RSTRANSTEPMOVE     Rule Type: Direct or MOVE
+Source: http://www.tcodesearch.com/sap-tables/search?q=transformation
