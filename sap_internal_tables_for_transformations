@@ -1,4 +1,13 @@
-
+    --------------------------------------------------------------
+* Tables for transformations mapping:
+* ----------------------------------
+* RSOSFIELDMAP -  source to target mapping
+* RSISOSMAP    -  InfoSources and DataSources mapping
+* RSDSEGFD     -  fields data length and types
+* RSDCHABAS    -  InfoObjects data length and fields
+* --------------------------------------------------------------
+    
+    
     RSTRAN : Transformation  BW - Data Staging 
     RSTRANRULE : Transformation Rule  BW - Data Staging 
     DMUPOB : DMU item object (head for DMU transformation matrices)  Logistics - Product Data Management 
