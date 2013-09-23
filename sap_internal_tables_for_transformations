@@ -1,9 +1,9 @@
-    --------------------------------------------------------------
+* --------------------------------------------------------------
 * Tables for transformations mapping:
 * ----------------------------------
 * RSOSFIELDMAP -  source to target mapping
 * RSISOSMAP    -  InfoSources and DataSources mapping
-* RSDSEGFD     -  fields data length and types
+* RSDSSEGFD    -  fields data length and types
 * RSDCHABAS    -  InfoObjects data length and fields
 * --------------------------------------------------------------
     
