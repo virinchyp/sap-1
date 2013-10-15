@@ -1,0 +1,310 @@
+Transfer	
+Structure	
+RSTS	Transfer
+	Structure List 
+RSTSFIELD 	Transfer
+	Structure fields 
+RSTSRULES  	Transfer
+	Structure rules 
+RSAROUTT	Text
+	name of Transfer Routine 
+DD03T	Text for
+	R/3 Transfer structure Objects 
+	
+Update	
+Rules	
+RSUPDROUT 	Update
+	rules List 
+RSUPDDAT	Update
+	rules with routines 
+RSUPDKEY	Update
+	rule key fields 
+RSUPDINFO 	InfoProvider to Infosource correlation 
+	
+Embedded	
+ABAP coding for Transfer / Update Rules	
+RSAABAP	ABAP
+	source code per object routine 
+	
+	
+InfoPackage	
+RSLDPIO	Links
+	datasource to infopackages 
+RSLDPIOT  	InfoPackage Text Description 
+RSLDPRULE 	ABAP
+	source code for InfoPackages 
+RSLDPSEL   	Hardcoded selections in InfoPackages 
+RSMONICDP 	Contains
+	the request-id number by data target 
+RSPAKPOS	List of
+	InfoPackage Groups / InfoPackages
+	
+	
+	
+ProcessChain	
+RSEVENTCHAIN   	Event
+	Chain Processing Event Table 
+RSEVENTHEAD    	Header
+	for the event chain 
+RSEVENTHEADT    	Header
+	for the event chain 
+RSPCCHAIN 	Process
+	chain details 
+RSPCCHAINATTR  	Attributes for a Process Chain 
+RSPCCHAINEVENTS  	Multiple
+	Events with Process Chains 
+RSPCCHAINT  	Texts
+	for Chain 
+RSPCCOMMANDLOG 	System
+	Command Execution Logs (Process Chains) 
+RSPCLOGCHAIN  	Cross-Table Log ID / Chain ID 
+RSPCLOGS	Application Logs for the Process Chains 
+RSPCPROCESSLOG 	Logs for
+	the Chain Runs 
+RSPCRUNVARIABLES  	Variables for Process Chains for Runtime 
+RSPC_MONITOR 	Monitor
+	individual process chains
+	
+	
+Queries	
+RSZELTDIR 	Directory of the reporting component elements 
+RSZELTTXT 	Texts of
+	reporting component elements 
+RSZELTXREF 	Directory of query element references 
+RSRREPDIR 	Directory of all reports (Query GENUNIID) 
+RSZCOMPDIR 	Directory of reporting components 
+RSZRANGE	Selection specification for an element 
+RSZSELECT 	Selection properties of an element 
+RSZELTDIR 	Directory of the reporting component elements 
+RSZCOMPIC 	Assignment reuseable component <-> InfoCube 
+RSZELTPRIO 	Priorities with element collisions 
+RSZELTPROP 	Element
+	properties (settings) 
+RSZELTATTR 	Attribute selection per dimension element 
+RSZCALC	Definition of a formula element 
+RSZCEL	Query
+	Designer: Directory of Cells 
+RSZGLOBV	Global
+	Variables in Reporting 
+	
+	
+	
+Workbooks	
+RSRWBINDEX 	List of
+	binary large objects (Excel workbooks) 
+RSRWBINDEXT 	Titles
+	of binary objects (Excel workbooks) 
+RSRWBSTORE 	Storage
+	for binary large objects (Excel workbooks) 
+RSRWBTEMPLATE 	Assignment of Excel workbooks as personal templates 
+RSRWORKBOOK 	Where-used list for reports in workbooks
+	
+	
+Web	
+templates	
+RSZWOBJ	Storage
+	of the Web Objects 
+RSZWOBJTXT 	Texts
+	for Templates/Items/Views 
+RSZWOBJXREF 	Structure of the BW Objects in a Template 
+RSZWTEMPLATE 	Header
+	Table for BW HTML Templates 
+InfoObject 	
+RSDIOBJ                               	Directory of all InfoObjects 
+RSDIOBJT	Texts of
+	InfoObjects 
+RSDIOBJ   	Directory of all InfoObjects 
+RSDIOBJT	Texts of
+	InfoObjects 
+RSDATRNAV 	Navigation Attributes 
+RSDATRNAVT 	Navigation Attributes 
+RSDBCHATR 	Master
+	Data Attributes 
+RSDCHABAS 	Basic
+	Characteristics (for Characteristics,Time Characteristics, and Units)
+RSDCHA	Characteristics Catalog 
+RSDDPA	Data
+	Package Characteristic 
+RSDIOBJCMP 	Dependencies of InfoObjects 
+RSKYF	Key
+	Figures 
+RSDTIM	Time
+	Characteristics 
+RSDUNI	Units
+	
+	
+InfoCube	
+RSDCUBE	Directory of InfoCubes 
+RSDCUBET	Texts on
+	InfoCubes 
+RSDCUBEIOBJ 	Objects
+	per InfoCube (where-used list) 
+RSDDIME	Directory of Dimensions 
+RSDDIMET	Texts on
+	Dimensions 
+RSDDIMEIOBJ  	InfoObjects for each Dimension (Where-Used List) 
+RSDCUBEMULTI 	InfoCubes involved in a MultiCube 
+RSDICMULTIIOBJ 	MultiProvider: Selection/Identification of InfoObjects 
+RSDICHAPRO 	Characteristic Properties Specific to an InfoCube 
+RSDIKYFPRO 	Flag
+	Properties Specific to an InfoCube 
+RSDICVALIOBJ 	InfoObjects of the Stock Validity Table for the InfoCube
+	
+	
+	
+Aggregates	
+RSDDAGGRDIR 	Directory of Aggregates 
+RSDDAGGRCOMP 	Description of Aggregates 
+RSDDAGGRT 	Text on
+	Aggregates 
+RSDDAGGLT 	Directory of the aggregates, texts 
+	
+ODS	
+Object 	
+RSDODSO	Directory of all ODS Objects 
+RSDODSOT	Texts of
+	all ODS Objects 
+RSDODSOIOBJ 	InfoObjects of ODS Objects 
+RSDODSOATRNAV 	Navigation Attributes for ODS Object 
+RSDODSOTABL 	Directory of all ODS Object Tables 
+	
+PSA	
+RSTSODS	Directory of all PSA Tables 
+DataSource (= OLTP Source) 	
+ROOSOURCE   	Header
+	Table for SAP BW DataSources (SAP Source System/BW System) 
+RODELTAM	BW Delta
+	Procedure (SAP Source System) 
+RSOLTPSOURCE 	Replication Table for DataSources in BW 
+	
+	
+InfoSource	
+RSIS	Directory of InfoSources with Flexible Update 
+RSIST	Texts on
+	InfoSources with Flexible Update 
+RSISFIELD 	InfoObjects of an InfoSource 
+Communications Structure 	
+RSKS	Communications Structure for InfoSources with Flexible Update 
+RSKS	
+	Communications Structure (View) for Attributes for an InfoSource with
+	Direct Update 
+RSKSFIELD 	Texts on
+	InfoSources with Flexible Update 
+RSISFIELD 	InfoObjects of an InfoSource with Flexible Update 
+	
+Transfer	
+Structure 	
+RSTS	Transfer
+	Structure in SAP BW 
+ROOSGEN	
+	Generated Objects for a DataSource (Transfer Structure, for example in
+	SAP Source System)
+	
+	
+Mapping	
+RSISOSMAP 	Mapping
+	Between InfoSources and DataSources (=OLTP Sources) 
+RSOSFIELDMAP 	Mapping
+	Between DataSource Fields and InfoObjects 
+InfoSpoke 	
+RSBSPOKESELSET 	InfoSpoke Directory and Selection Options 
+RSBSPOKEVSELSET 	InfoSpoke Directory with Selection Options and Versioning 
+	
+SAP BW	
+Statistics	
+RSDDSTAT	Basic
+	Table for InfoCubes/Queries 
+RSDDSTATAGGR 	Detail
+	Table for Aggregate Setup 
+RSDDSTATAGGRDEF 	Detail
+	Table of Navigation for each InfoCube/Query 
+RSDDSTATCOND 	InfoCube
+	Compression 
+RSDDSTATDELE 	InfoCube
+	Deletions 
+RSDDSTATWHM 	Warehouse Management 
+	
+Misc	
+RSSELDONE 	InfoPackage selection and job program 
+RSPSADEL	PSA
+	Table deletion 
+TBTCP	Job
+	Schedule Definition 
+TBTCO	Job
+	Schedule Result 
+RSMONMESS 	Monitor
+	Messages 
+RSERRORLOG 	Check
+	loading errors in table 
+V_RSZGLOBV 	Report
+	Variables view table 
+DEVACCESS 	Developer Keys table 
+TSTC	All
+	Transactions in the system 
+RSDDAGGRDIR 	Directory of the aggregates 
+ROIDOCPRMS 	Control
+	parameters for data transfer from the source system 
+SMEN_BUFFC 	Objects
+	in User’s Favorites
+	
+	
+Web Item	
+RSZWITEM	Header
+	Table for BW Web Items 
+RSZWMDITEM 	BW Web
+	Metadata: Template Item ( Dataprovider, Item, … ). 
+Archiving	
+RSARCHIPRO 	BW
+	Archiving: General Archiving Properties 
+RSARCHIPROIOBJ 	BW
+	Archiving: General Archiving Properties 
+RSARCHIPROLOC 	BW
+	ARchiving: General Local Properties 
+RSARCHIPROLOCSEL 	BW
+	Archiving: Archived Data Area 
+RSARCHIPROPID 	BW
+	Archiving: Program References of InfoProvider 
+RSARCHREQ 	BW
+	Archiving: Archiving Request 
+RSARCHREQFILES 	BW
+	Archiving: Verfified Archive Files 
+RSARCHREQSEL 	BW
+	Archiving: Request-Selections 
+Table Name 	Description
+TOBJ	Authorization Objects
+TACT	Activities which can be Protected (Standard activities authorization fields in the system)
+TACTZ	Valid activities for each authorization object
+TDDAT	Maintenance Areas for Tables
+TSTC	SAP Transaction Codes
+TPGP	ABAP/4 Authorization Groups
+USOBT	Relation transaction > authorization object
+USOBX	Check table for table USOBT
+USOBT_C	Relation Transaction > Auth. Object (Customer)
+USOBX_C	Check Table for Table USOBT_C
+	
+User Tables	
+	
+Table	Description 
+USR01	User master record (runtime data)
+USR02	Logon data
+USR03	User address data
+USR04	User master authorizations
+USR05	User Master Parameter ID
+USR06	Additional Data per User
+USR07	Object/values of last authorization check that failed
+USR08	Table for user menu entries
+USR09	Entries for user menus (work areas)
+USR10	User master authorization profiles
+USR11	User Master Texts for Profiles (USR10)
+USR12	User master authorization values
+USR13	Short Texts for Authorizations
+USR14	Surchargeable Language Versions per User
+USR30	Additional Information for User Menu
+USH02	Change history for logon data
+USH04	Change history for authorizations
+USH10	Change history for authorization profiles
+USH12	Change history for authorization values
+UST04	User masters
+UST10C	User master: Composite profiles
+UST10S	User master: Single profiles
+UST12	User master: Authorizations
