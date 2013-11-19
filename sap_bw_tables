@@ -199,7 +199,10 @@ RSTS	Transfer
 ROOSGEN	
 	Generated Objects for a DataSource (Transfer Structure, for example in
 	SAP Source System)
-	
+
+
+DataSources:
+RSDSSEGFDTSH - Texts of DataSource fields.
 	
 Mapping	
 RSISOSMAP 	Mapping
