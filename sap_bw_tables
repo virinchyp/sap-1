@@ -39,6 +39,216 @@ RSMONICDP 	Contains
 RSPAKPOS	List of
 	InfoPackage Groups / InfoPackages
 	
+ SAP BW Warehouse Management Tables
+Warehouse Management - General tables
+
+RSDDSTAT
+    Obsolete as of Release BI 7.0 -> RSDDSTAT_OLAP/DM 
+RSMDATASTATE
+    Status of the data in the Infocubes 
+RSMASD
+    Lock Table for Master Data Deletion 
+RSKS
+    Communication structure 
+RSKSFIELD
+    Fields of the communication structure 
+RSTCMASTERLOAD
+    Master data: Time of Last Load 
+RSTCIMPDIR
+    Database table for storing importances 
+RSENQ_PROT_ENQ
+    Lock-table for generic lock module 
+RSENQ_PROT
+    Header-table log for lock manager 
+RSTCTEXTRACT
+    Customizing table for Step Category 
+RSSUBSTEP2EVID
+    Mapping of DTP Command, Sub-step to Event IDs 
+RSRVTESTHIER
+    Hierarchical Storage for Tests of RSRV 
+RSRVTESTHIERT
+    Text Table for RSRVTEST 
+V_RSMDATASTATE
+    Generated Table for View V_RSMDATASTATE 
+V_RSTC_CALL_BIAC
+    Generated Table for View V_RSTC_CALL_BIAC 
+V_RSDDSTATDTP
+    Generierte Tabelle zu einem View 
+RSBAIPROV
+    Temporary Storage of Selected InfoProvider Data 
+RSENQMDREQU
+    Lock table for master data upload 
+
+Warehouse Management - Data Warehousing Workbench tables
+
+RSAWBN_USR_VIEWD
+    User Settings for Start of DWB: Fcode - drawsel 
+RSAWBNOBJCLASS
+    Object Classes for TLOGO Objects in the AWB 
+RSAWBN_USR_TREE
+    User Settings for Start of DWB: Trees 
+RSAWBNFOLDERTREE
+    Tools That Process a Specific AWB Requst 
+RSAWBNTOOLS
+    Tools That Process a Specific AWB Request 
+RSAWBN_USR_VIEW
+    User Settings for Start of DWB: View 
+RSDFDMOD
+    Directory of Data Flows 
+RSGMDDMOD
+    Directory for Data Model 
+RSIWADFLOW
+    Listing of the Data Flow 
+
+Warehouse Management - Data Basis tables
+
+RSDCUBE
+    Directory of InfoCubes / InfoProvider 
+RSDODSO
+    Directory of all DataStores 
+RSDCUBEMULTI
+    InfoCubes concerned with MultiCube 
+RSDCUBEIOBJ
+    Objects per InfoCube (where-used list) 
+RSHIEDIR
+    Hierarchy Catalog 
+RSBFILE
+    Open Hub Destinations: Files 
+RSDCUBET
+    Texts for the InfoCubes 
+RSEURO
+    Conversion Table for Euro Conversion 
+RSBSPOKESELSET
+    InfoSpokes Directory 
+RSDODSOIOBJ
+    InfoObject in DataStore 
+RSTHIERNODE
+    Texts of Non-Postable Hierarchy Nodes 
+RSDICMULTIIOBJ
+    MultiProvider: Selection/Identification of InfoObjects 
+RSBODSLOGSTATE
+    Changelog Status for ODS Object 
+RSDDIME
+    Dimensions directory 
+RSDODSOT
+    Texts of DataStores 
+RSDDIMEIOBJ
+    InfoObjects per dimension (where-used list) 
+RSDMDELTA
+    Data Mart Delta Management 
+RSBODSLOG
+    Requests in ODS Changelog 
+RSDODSOATRNAV
+    Navigation Attributes in DataStore 
+RSDDIMET
+    Dimension Texts 
+RSDICHAPRO
+    InfoCube-specific characteristic properties 
+RSDIKYFPRO
+    InfoCube-specific key figure properties 
+RSHIEDIRT
+    Hierarchy directory texts 
+RSDODSOTABL
+    Directory of all DataStore Tables 
+RSDICVALIOBJ
+    InfoObjects in NC-value validity table for the InfoCube 
+RSDODSOLOC
+    Local Properties of DataStores 
+RSDODSOIOBJIND
+    InfoObjects in DS Indexes 
+RSBSPOKEVSELSET
+    InfoSpokes Directory 
+RSMDMCNVTAB
+    Conversion Table Model (Determines Data Class / Tablespace) 
+RSAPOADM
+    Management Table for Transactional Requests 
+RSODSREQTSTMP
+    Sorting of ODS Requests 
+RSBOHDEST
+    Directory of Open Hub Destinations 
+RSSEM_RFCPACK
+    Temporary Storage of Selected InfoProvider Data 
+RSDMODSTAB
+    Model Table: ODS Table Active Records 
+RSBREQUID
+    Open Hub: Requests 
+RSDMODSTAB_UR
+    Model Table for ODS Update and Rollback 
+RSDMFACTAB
+    Model table: Fact table 
+RSDCUBELOC
+    Local Characteristics: InfoCubes (InfoProvider) 
+RSMDSTATE
+    Status Management for Master Data Conversion 
+RSODSACTDATA
+    Copy of INDX for ODS Activation 
+RSBSPOKE
+    InfoSpokes Directory 
+RSDIPROIOBJT
+    Texts for InfoObjects in InfoProvider 
+RSDCHABASDEL
+    Status Logging for Master Data Deletion 
+RSBREQUID3RD
+    Open Hub: Status of 3rd Party Requests 
+RSDMSTAT
+    Datamart Status Table 
+RSBTRANSFIELD
+    Target Structure InfoObjects for Open Hub Transformation 
+RSDDIMELOC
+    Dimensions system-local properties (not transport.) 
+RSBSPOKET
+    InfoSpokes Directory 
+RSDIPROHIER
+    InfoProvider: Hierarchies (InfoObjects) 
+RSHIELVT
+    Levels Table for Hierarchies in BW 
+RSODSO_SETTING
+    Configuration for Runtime Behavior of the DataStore Object 
+RSDIPROHNODE
+    InfoProvider: Hierarchy Nodes 
+RSDIPROHNODEIOBJ
+    InfoProvider: InfoObjects in Hierarchy Nodes 
+RSDIPROHNODET
+    InfoProvider: Hierarchy Nodes, Descriptions 
+RSMHIERNODE
+    Master data: Hierarchy nodes that cannot be posted to 
+RSBSPOKEV
+    InfoSpoke Directory: Versions 
+RSDODSOINDX
+    Indexes for DataStores 
+RSBREQUESTDELTA
+    Open Hub: Cross Reference Outbound/Inbound Requests 
+RSBREQUESTMESS
+    Open Hub: Log for a Request 
+RSBOHSERVICETP
+    Open Hub: Service Types 
+RSBREQUIDRUN
+    Open Hub: Table with Status for a Request Run 
+RSBSTRUCTURE
+    Open Hub: Generated Structures and Tables 
+RSMDCNVCMP
+    Internal Value Inconsistencies in Compounding 
+RSDODSOIOBJPRO
+    InfoObject Properties within the DataStore 
+RSBSTEPIDMESS
+    Open Hub: Log for a Request 
+RSODSO_ROLLBACK
+    Table for Temporary Storage of Data during Rollback 
+RSBMON
+    Monitor Variants for Open Hub Monitor 
+RSSEM_UCR0_IPD
+    SEM BCS Destination Registration For an InfoProvider 
+RSSEM_REQUESTCOP
+    InfoCube Assignment 
+RSBSPOKEDELTA
+    Requests for Delta Recording of an InfoSpoke 
+RSBSPOKESTAT
+    Status of Delta Recording of a Spoke
+
+
+Read more: http://www.tcodesearch.com/sap-tables/list?module=BW&comp=BW-WHM&desc=Warehouse%20Management#ixzz2lGSXGHxU
+Source: http://www.tcodesearch.com/sap-tables/list?module=BW&comp=BW-WHM&desc=Warehouse%20Management
+	
 	
 	
 ProcessChain	
