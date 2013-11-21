@@ -521,3 +521,128 @@ UST04	User masters
 UST10C	User master: Composite profiles
 UST10S	User master: Single profiles
 UST12	User master: Authorizations
+
+
+
+Wichtige Tabellen im SAP BW Stand: 05.11.2008
+InfoArea
+RSDAREA Auflistung der InfoAreas
+RSDAREAT Die zu den InfoAreas zugehörigen
+Texte
+InfoObject Kataloge
+RSDIOBC Auflistung der InfoObject Kataloge
+RSDIOBCT Die zu den InfoObject Kataloge
+gehörenden Texte
+RSDIOBCIOBJ Auflistung der InfoObjects zu den
+Katalogen
+InfoObjects
+RSDIOBJ Auflistung aller InfoObjecte
+RSDJOBJT Texte zu den InfoObjects
+RSDIOBJCMP Info über MerkmalsKlammerung
+RSDCHA Katalog der Merkmale
+RSDBCHATR Stammdatenattribute
+RSDCHABAS Auflistung der Basismerkmale
+RSDATRNAV Navigationsattribute
+RSDATRNAVT Navigationsattribute Text
+RSDDPA Datenpaketmerkmale
+RSKYF Kennzahlen
+RSDTIM Zeitmerkmale
+RSDUNI Einheiten
+InfoCube
+RSDCUBE Auflistung der InfoCubes
+RSDCUBET Die zu den InfoCubes gehörenden
+Texte
+RSDDIME Auflistung der Dimension eines
+Cubes
+RSDDIMET Texte zu Dimensionen
+RSDDIMEIOBJ InfoObjecte je Dimension
+RSDCUBEIOBJ Navigationsattribute
+RSDCUBEMULTI An Multiprovider beteiligte InfoCubes
+RSDCUBEMULTIIOBJ Multiprovider Auswahl/Identifikati
+on
+von InfoObjects
+RSDICHAPRO InfoCube spezifische
+Merkmalseigenschaften
+RSDIKYFPRO InfoCube spezifische
+Kennzahleigenschaften
+RSDICVALIOBJ InfoObjects der
+Bestandsgültigkeitstabelle InfoCube
+RSSEM_REQUESTCOP InfoCube Zuordnung
+Hierarchien
+/BI0/HTCTSYSID Hierarchie: InfoObject BW System
+/BI0/ITCTSYSID SID-Struktur der Hierarchien:
+InfoObject BW System
+/BI0/KTCTSYSID Umschlüsselung Hierarchieknoten -
+SID: InfoObject BW System
+RSHIEDIR Hierarchieverzeichnis
+RSOSOHIE Verzeichnis für
+Stammdatenhierarchien
+RSOSOHIET Verzeichnis für
+Stammdatenhierarchien - Texte
+Aggregate
+RSDDAGGRDIR Verzeichnis der Aggregate
+RSDDAGGRCOMP Beschreibung der Aggregate
+RSDDAGGRT Texte zu den Aggregaten
+ODS – Objekte
+RSDODSO Auflistung aller ODS - Objekte
+RSDODSOT Die zu den ODS – Objekten
+gehörenden Texte
+RSDODSOIOBJ InfoObjects des ODS-Objects
+RSDODSOTABL Auflistung aller ODS - Tabellen
+RSDODSOATRNAV Navigationsattribute zum ODS-Object
+RSBODSLOG Speichert alle in einem ODS
+vorkommenden Requests
+(ReqNummmern)
+RSBODSLOGSTATE Status des Changelogs zu einem
+ODS-Objekt
+/BI0/RREQUID Enthält Zuordnung von
+Requestnummern zu RequestIds
+Transferstruktur
+RSTS Auflistung der Transferstrukturen
+RSTSFIELD Auflistung der Felder einer TS
+RSTSRULES Übertragungsregeln
+PSA
+RSTSODS Verzeichnis aller PSA - Tabellen
+/BIC/B0000xxxxxx Bezeichnung einer PSA – Tabelle
+Abhängig von der Bezeichnung der
+DataSource
+Transformationen
+RSTRAN Transformationen
+RSTRANFIELD Mapping Regelparameter -
+Strukturfelder
+Kommunikationsstruktur
+RSKS Kommunikationsstrukturen
+RSKSFIELD Auflistung der Felder der KS
+RSISFIELD Infoobjects einer InfoSource mit
+flexibler Fortschreibung
+Übertragungsregeln
+RSISOSMAP Mapping zwischen InfoSource und
+Quellsource (OLTP)
+RSOSFIELDMAP Mapping zwischen InfoSource und
+Quellsource (OLTP) bezogen auf die
+einzelnen Felder
+ABAP Routinen bei Übertragungsregeln
+RSAABAP ABAP - Quellcode
+RSAABAPINV ABAP – Quellcode für inverse
+Routinen
+RSARFIELDS Prüftabelle
+RSAROUT Prüftabelle
+RSAROUTT Texttabelle
+RSTIMECONV Datumskonvertierung
+SOURCE SYSTEM
+RSBASIDOC Zuordnung Quellsysteme zu BIW-
+Systeme inklusive IDoctyp
+RSLOGSYSDEST Destination zum logischen System
+Tabellen aus dem Bereich der Berechtigungen / Berec
+htigungsprüfung
+AGR* div. Tabellen für Rollen
+TSTC Transaktionscodes
+RSSAUTHHIER Definition der Berechtigungen auf
+Hierarchien
+RSSAUTHHIERNODE BW Berechtigungen Reporting:
+Hierarchieknoten
+RSSBAÚTHGEN BW Berechtigungen Reporting:
+Generierung von Berechtigungen
+
+Source: http://www.phutter.de/down/Tabellen%20im%20SAP%20BW.pdf
+
