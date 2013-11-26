@@ -1,0 +1,7 @@
+All the Calculated and restricted key figures are stored in the table RSZELTDIR To view all the calculated key figures & restricted key figures, go to SE16 and give the 'Definition type of an element' as CKF(calculated KF) and SEL(Restricted KF).
+
+This will give you the ID. You can then give this ID in the table RSZELTXREF to find the Element ID of the query & the infocube on which this KF is defined.( First ID in this table is the ID of the query and the 2nd ID is the ID of the query component).
+
+You can then use this query element ID in the table RSRREPDIR to get the query technical name.
+
+Source: http://benxbrain.com/en/index.do?onInputProcessing%28brai_object_thread%29&001_threadid=0000959099&001_boardtype=01&sysid=WP5&pgmid=R3TR&object=TABL&obj_name=RSDDKF&child_param=
