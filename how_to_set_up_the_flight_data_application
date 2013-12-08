@@ -1,0 +1,165 @@
+Setting Up the Flight Data Application 
+
+Use
+
+The flight data application can be set up in demonstration systems for training or demonstration purposes. This section contains information about what settings to make.
+
+Flight Data Application in a Central System
+
+The flight data application can be set up in one logical system. This means that the travel agency and all the airlines work in the same system.
+
+Example
+
+This could happen if, for example, an application service provider offers its services to all involved parties but the technical realization occurs in one system.
+
+However, ALE-relevant concepts cannot be demonstrated in this configuration.
+
+Only one setting is required:
+
+    In the system, go to the ABAP Editor (SE38) and execute the SAPBC_DATA_GENERATOR program. This program generates suitable sample data in the tables of the flight data application, and initializes the number ranges, for example. Note the program completely deletes any existing data.
+
+After this program has run, you can test the application as described in the
+Testing the Flight Data Application.
+
+Flight Data Application in Distributed Systems
+
+The flight data application can also be set up in multiple logical systems. To do so, the travel agency and all the airlines each have to work in one fixed system. You can group multiple airlines (or the travel agency and the airlines) in one system. However, ALE-relevant concepts cannot be demonstrated well in this configuration.
+
+You have to make the following settings:
+
+    Model the distribution. To do this, group the airlines (and the travel agency) that you want to work in one logical system. Give all the logical systems a name. Decide which physical systems the logical systems will work in.
+
+Example
+
+Logical System
+	
+
+Physical System
+	
+
+Business Partner
+
+TRAVAGENCY
+	
+
+T01(000)
+	
+
+Travel agency
+
+AIRLINE1
+	
+
+T02(000)
+	
+
+LH, SQ, UA
+
+AIRLINE2
+	
+
+T02(001)
+	
+
+AA, DL, QF
+
+Note 
+
+We recommend that you put the travel agency and two groups of airlines together (see example). This makes the model complex enough for a useful recipient determination while keeping administration effort to a minimum.
+
+To reduce the administration effort even more, we recommend that you install different logical systems in different clients of a physical system.
+
+    Fill all logical systems with standard data. To do this, go to the ABAP Editor (SE38) and execute the SAPBC_DATA_GENERATOR program in each system and client. This program generates suitable sample data in the tables of the flight data application, and initializes the number ranges, for example. Note that the program completely deletes any existing data.
+
+Since the flight data is client-specific, you have to execute the program in all the relevant clients.
+
+It is also important that you execute the program in all the relevant systems on the same day. Since some of the generated data depends on the day of execution, this is the only way of guaranteeing a consistent dataset.
+
+    Change the flight data in such a way that the distribution of data is reflected correctly. To do this, go to the ABAP Editor and execute the SAPBC_DATA_GENERATOR_ALE program in each system and client. For this you need to specify which airlines have their original data in each system. 
+
+After step 2, identical flight data is available in all the systems. After step 3, general data and airline-specific data is available in every system (identical in every system).
+
+For more information, see the program documentation.
+
+    Maintain all the necessary ALE-relevant settings such as logical systems, RFC connections, ports, and so on.
+    Maintain the ALE distribution model. Create a new distribution model for this purpose. Maintain all the necessary connections. These are shown in the following table:
+
+Sender
+	
+
+Recipient
+	
+
+BAPI
+	
+
+Note
+
+Travel agency
+	
+
+Airline n
+	
+
+Flight.CheckAvailability
+	
+
+Filter AIRLINEID for FG
+
+Travel agency
+	
+
+Airline n
+	
+
+FlightBooking.CreateFromData
+	
+
+Filter AIRLINEID for FG
+
+Travel agency
+	
+
+Airline n
+	
+
+FlightBooking.Confirm
+	
+
+Filter AIRLINEID for FG
+
+Travel agency
+	
+
+Airline n
+	
+
+FlightBooking.Cancel
+	
+
+Filter AIRLINEID for FG
+
+Airline n
+	
+
+Travel agency
+	
+
+Flight.SaveReplica
+	 
+
+Airline n
+	
+
+Airline m
+	
+
+Flight.SaveReplica
+	 
+
+This means that you have to maintain the first four entries from the travel agency for each recipient system that contains the original data of at least one airline. If there is more than one airline system, you have to enter filter values for the AIRLINEID filter for all entries.
+
+For the Flight.SaveReplica method, you have to determine a connection from each airline to the travel agency and to every other airline. You do not need to set a filter.
+
+    Travel agencies sometimes request flight bookings but do not confirm them. These flight bookings need to be canceled after a grace period (24 hours) so that the seats are not blocked unnecessarily. The SAPBC_CANCEL_RESERVATIONS program performs this task. Execute this program at regular intervals. Schedule it as a job to be executed every night, for example.
+    If you change flight data (SFLIGHT table) after the data has been generated (steps 2 and 3), you must also make these changes in all the other systems. First change the data in the original system of the airline. Then use the SAPBC_REPLICATE_FLIGHTS program to replicate the data in all the other systems. The prerequisite for this is that the distribution model and all the other ALE settings have been maintained completely.
