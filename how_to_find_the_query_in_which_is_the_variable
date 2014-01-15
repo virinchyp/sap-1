@@ -1,0 +1,172 @@
+*&---------------------------------------------------------------------
+*
+*& Report ZBW_VAR_WHERE_USED
+*&
+*&---------------------------------------------------------------------
+*
+*& TITLE: Find the where used list of Bex variables in queries and DTPs
+*&
+*& CREATED ON: 28 Jan 2012
+*&
+*& CREATED BY: Brian Keenan
+*&
+*& DESCRIPTION: This program can be used to find what Queries and DTPs
+*& a particular variable is used in.
+*&---------------------------------------------------------------------
+*
+REPORT ZBW_VAR_WHERE_USED.
+************************* Type Declarations ****************************
+TYPES:
+BEGIN OF ty_output,
+    infocube TYPE rsinfocube, "Infoprovider name
+    compid TYPE rszcompid, "Query Technical Name
+    txtlg TYPE rstxtlg, "Query Description
+    author TYPE xuauthor, "Query Owner
+    lastuser type LAST_USER, "Last Changed by
+END OF ty_output.
+************************* ALV References *******************************
+DATA: go_alv TYPE REF TO cl_salv_table,
+      go_columns TYPE REF TO cl_salv_columns,
+      go_funcs TYPE REF TO cl_salv_functions,
+      go_ex TYPE REF TO CX_ROOT.
+************************* Internal Tables ******************************
+DATA:
+    varid TYPE SYSUUID_25,
+    it_output TYPE STANDARD TABLE OF ty_output,
+    it_rszglobv TYPE STANDARD TABLE OF rszglobv,
+    it_rszeltcomp TYPE STANDARD TABLE OF rszeltxref,
+    it_rszeltquery TYPE STANDARD TABLE OF rszeltxref,
+    it_results TYPE STANDARD TABLE OF rszeltxref,
+    it_rsoobjxref TYPE STANDARD TABLE OF rsoobjxref,
+    it_rszeltprop TYPE STANDARD TABLE OF rszeltprop,
+    it_rsrrepdir TYPE STANDARD TABLE OF rsrrepdir,
+    it_rszelttxt TYPE STANDARD TABLE OF rszelttxt,
+    it_rszeltxref TYPE STANDARD TABLE OF rszeltxref,
+    it_rshredir TYPE STANDARD TABLE OF rshiedir.
+
+************************* Work Areas ***********************************
+DATA:
+    wa_output TYPE ty_output,
+    wa_rsrrepdir TYPE rsrrepdir,
+    wa_rszelttxt TYPE rszelttxt,
+    wa_rszeltcomp TYPE rszeltxref,
+    wa_rszglobv TYPE rszglobv,
+    wa_rszeltprop TYPE rszeltprop,
+    wa_rsoobjxref TYPE rsoobjxref.
+************************************************************************
+* SELECTION SCREEN DETAILS
+************************************************************************
+*
+* Select from the variable name, Also select in Queries or DTPs
+*
+SELECTION-SCREEN BEGIN OF BLOCK blk1 WITH FRAME TITLE text-001.
+PARAMETERS: p_var LIKE RSZGLOBV-vnam.
+SELECTION-SCREEN END OF BLOCK blk1.
+SELECTION-SCREEN BEGIN OF BLOCK blk2 WITH FRAME TITLE text-002.
+PARAMETERS: r_qry RADIOBUTTON GROUP RG DEFAULT 'X',
+r_dtp RADIOBUTTON GROUP RG.
+SELECTION-SCREEN END OF BLOCK blk2.
+************************************************************************
+* SELECTION OF DATA
+************************************************************************
+* Check the validity of the input
+SELECT SINGLE VARUNIID FROM RSZGLOBV INTO varid WHERE VNAM = p_var.
+IF sy-subrc <> 0.
+* No variables exists of that name
+  MESSAGE 'No Variable exists of this name' TYPE 'I'.
+  EXIT.
+ENDIF.
+*What about the DTP
+IF r_dtp = 'X'.
+*DTP reference stored in table RSOOBJXREF
+  SELECT *
+  FROM RSOOBJXREF
+  INTO TABLE it_rsoobjxref
+  WHERE objvers = 'A' AND
+  OBJNM_DEP = p_var.
+  IF sy-subrc <> 0.
+    MESSAGE 'The variable has no references to DTPs' TYPE 'I'.
+    EXIT.
+  ELSE.
+
+    WRITE: /
+  'The variable is contained in the below DTPs'.
+*  Now lets do the display of the results
+    LOOP AT it_rsoobjxref INTO wa_rsoobjxref.
+    WRITE:  / wa_rsoobjxref-objnm.
+    ENDLOOP.
+  ENDIF.
+ELSE.
+*  Now get the reference ID's for this unique eltuid's.
+*  So we now can get the containing elements of our
+*  variable element.
+    SELECT *
+      FROM rszeltxref INTO TABLE it_rszeltcomp
+     WHERE objvers = 'A'
+       AND teltuid = varid.
+    LOOP AT it_rszeltcomp INTO wa_rszeltcomp.
+*    check if we have a top level element
+    IF wa_rszeltcomp-LAYTP = 'SHT' or wa_rszeltcomp-LAYTP = 'SOB' or wa_rszeltcomp-LAYTP = 'VAR'.
+*    Add to the results
+    APPEND wa_rszeltcomp to it_results.
+    ELSE.
+*    Otherwise keep searching
+    SELECT *
+    FROM rszeltxref
+    INTO TABLE it_rszeltquery
+    WHERE objvers = 'A'
+    AND
+    teltuid = wa_rszeltcomp-seltuid.
+    APPEND LINES OF it_rszeltquery to it_rszeltcomp.
+    ENDIF.
+    ENDLOOP.
+    IF sy-subrc = 0.
+*     Now get the actual reports from reporting table.
+*     So we should the query details now.
+    SELECT * FROM rsrrepdir
+    INTO TABLE it_rsrrepdir
+    FOR ALL ENTRIES IN it_results
+    WHERE objvers = 'A' AND
+    comptype = 'REP' AND
+    compuid = it_results-seltuid.
+    IF sy-subrc = 0.
+*       get the query txt description for all found queries.
+     SELECT * FROM rszelttxt
+     INTO TABLE it_rszelttxt
+     FOR ALL ENTRIES IN it_rsrrepdir
+     WHERE objvers = 'A' AND eltuid = it_rsrrepdir-compuid.
+    ENDIF.
+  ENDIF.
+
+*   Loop through the descriptions and also assign the
+*   texts to the output to make this more clear.
+  LOOP AT it_rsrrepdir INTO wa_rsrrepdir.
+    CLEAR: wa_output, wa_rszelttxt.
+    MOVE-CORRESPONDING wa_rsrrepdir TO wa_output.
+*     get the query description.
+    READ TABLE it_rszelttxt INTO wa_rszelttxt WITH KEY
+    eltuid = wa_rsrrepdir-compuid.
+    IF sy-subrc = 0.
+      wa_output-txtlg = wa_rszelttxt-txtlg.
+    ENDIF.
+    APPEND wa_output TO it_output.
+  ENDLOOP.
+  TRY.
+  cl_salv_table=>factory(
+    IMPORTING
+      r_salv_table = go_alv
+    CHANGING
+      t_table = it_output ).
+  " set column optimized
+    go_columns = go_alv->get_columns( ).
+    go_columns->set_optimize( ).
+  " set functions
+    go_funcs = go_alv->get_functions( ).
+    go_funcs->set_all( ).
+    go_alv->display( ).
+  CATCH cx_salv_msg INTO go_ex.
+    MESSAGE go_ex TYPE 'E'.
+  ENDTRY.
+ENDIF.
+
+" Source: 
