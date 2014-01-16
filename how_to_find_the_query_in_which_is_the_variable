@@ -6,10 +6,6 @@
 *
 *& TITLE: Find the where used list of Bex variables in queries and DTPs
 *&
-*& CREATED ON: 28 Jan 2012
-*&
-*& CREATED BY: Brian Keenan
-*&
 *& DESCRIPTION: This program can be used to find what Queries and DTPs
 *& a particular variable is used in.
 *&---------------------------------------------------------------------
@@ -93,7 +89,7 @@ IF r_dtp = 'X'.
   'The variable is contained in the below DTPs'.
 *  Now lets do the display of the results
     LOOP AT it_rsoobjxref INTO wa_rsoobjxref.
-    WRITE:  / wa_rsoobjxref-objnm.
+      WRITE:  / wa_rsoobjxref-objnm.
     ENDLOOP.
   ENDIF.
 ELSE.
@@ -105,68 +101,62 @@ ELSE.
      WHERE objvers = 'A'
        AND teltuid = varid.
     LOOP AT it_rszeltcomp INTO wa_rszeltcomp.
-*    check if we have a top level element
-    IF wa_rszeltcomp-LAYTP = 'SHT' or wa_rszeltcomp-LAYTP = 'SOB' or wa_rszeltcomp-LAYTP = 'VAR'.
-*    Add to the results
-    APPEND wa_rszeltcomp to it_results.
-    ELSE.
-*    Otherwise keep searching
-    SELECT *
-    FROM rszeltxref
-    INTO TABLE it_rszeltquery
-    WHERE objvers = 'A'
-    AND
-    teltuid = wa_rszeltcomp-seltuid.
-    APPEND LINES OF it_rszeltquery to it_rszeltcomp.
-    ENDIF.
+*     check if we have a top level element
+      IF wa_rszeltcomp-LAYTP = 'SHT' or wa_rszeltcomp-LAYTP = 'SOB' or wa_rszeltcomp-LAYTP = 'VAR'.
+*       Add to the results
+        APPEND wa_rszeltcomp to it_results.
+      ELSE.
+*     Otherwise keep searching
+        SELECT *
+          FROM rszeltxref INTO TABLE it_rszeltquery
+         WHERE objvers = 'A'
+           AND teltuid = wa_rszeltcomp-seltuid.
+        APPEND LINES OF it_rszeltquery to it_rszeltcomp.
+      ENDIF.
     ENDLOOP.
     IF sy-subrc = 0.
 *     Now get the actual reports from reporting table.
 *     So we should the query details now.
-    SELECT * FROM rsrrepdir
-    INTO TABLE it_rsrrepdir
-    FOR ALL ENTRIES IN it_results
-    WHERE objvers = 'A' AND
-    comptype = 'REP' AND
-    compuid = it_results-seltuid.
-    IF sy-subrc = 0.
-*       get the query txt description for all found queries.
-     SELECT * FROM rszelttxt
-     INTO TABLE it_rszelttxt
-     FOR ALL ENTRIES IN it_rsrrepdir
-     WHERE objvers = 'A' AND eltuid = it_rsrrepdir-compuid.
+      SELECT * FROM rsrrepdir
+      INTO TABLE it_rsrrepdir FOR ALL ENTRIES IN it_results
+      WHERE objvers = 'A' AND
+      comptype = 'REP' AND
+      compuid = it_results-seltuid.
+      IF sy-subrc = 0.
+*         get the query txt description for all found queries.
+       SELECT *
+         FROM rszelttxt INTO TABLE it_rszelttxt FOR ALL ENTRIES IN it_rsrrepdir
+        WHERE objvers = 'A' AND eltuid = it_rsrrepdir-compuid.
+      ENDIF.
     ENDIF.
-  ENDIF.
 
 *   Loop through the descriptions and also assign the
 *   texts to the output to make this more clear.
-  LOOP AT it_rsrrepdir INTO wa_rsrrepdir.
-    CLEAR: wa_output, wa_rszelttxt.
-    MOVE-CORRESPONDING wa_rsrrepdir TO wa_output.
-*     get the query description.
-    READ TABLE it_rszelttxt INTO wa_rszelttxt WITH KEY
-    eltuid = wa_rsrrepdir-compuid.
-    IF sy-subrc = 0.
-      wa_output-txtlg = wa_rszelttxt-txtlg.
-    ENDIF.
-    APPEND wa_output TO it_output.
-  ENDLOOP.
-  TRY.
-  cl_salv_table=>factory(
-    IMPORTING
-      r_salv_table = go_alv
-    CHANGING
-      t_table = it_output ).
-  " set column optimized
-    go_columns = go_alv->get_columns( ).
-    go_columns->set_optimize( ).
-  " set functions
-    go_funcs = go_alv->get_functions( ).
-    go_funcs->set_all( ).
-    go_alv->display( ).
-  CATCH cx_salv_msg INTO go_ex.
-    MESSAGE go_ex TYPE 'E'.
-  ENDTRY.
+    LOOP AT it_rsrrepdir INTO wa_rsrrepdir.
+      CLEAR: wa_output, wa_rszelttxt.
+      MOVE-CORRESPONDING wa_rsrrepdir TO wa_output.
+*       get the query description.
+      READ TABLE it_rszelttxt INTO wa_rszelttxt WITH KEY
+      eltuid = wa_rsrrepdir-compuid.
+      IF sy-subrc = 0.
+        wa_output-txtlg = wa_rszelttxt-txtlg.
+      ENDIF.
+      APPEND wa_output TO it_output.
+    ENDLOOP.
+    TRY.
+    cl_salv_table=>factory(
+      IMPORTING  r_salv_table = go_alv
+      CHANGING   t_table = it_output ).
+    " set column optimized
+      go_columns = go_alv->get_columns( ).
+      go_columns->set_optimize( ).
+    " set functions
+      go_funcs = go_alv->get_functions( ).
+      go_funcs->set_all( ).
+      go_alv->display( ).
+    CATCH cx_salv_msg INTO go_ex.
+      MESSAGE go_ex TYPE 'E'.
+    ENDTRY.
 ENDIF.
 
 " Source: http://www.sdn.sap.com/irj/scn/go/portal/prtroot/docs/library/uuid/a084dec5-c145-2f10-e6b7-8a442f5066b5?overridelayout=true
