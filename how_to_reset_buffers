@@ -1,0 +1,11 @@
+How to reset buffers
+
+/$SYNC - buffers of the application server
+/$CUA - CUA buffer of the application server
+/$TAB - the TABLE buffers of the application server
+/$NAM - the nametab buffer of the application server
+/$DYNP - the screen buffer of the application server
+
+Please note: resetting of the buffers could change the performance of the entire system. 
+
+Source: http://searchsap.techtarget.com/tip/Basis-best-practices-How-to-reset-buffers
