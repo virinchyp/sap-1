@@ -1,0 +1,117 @@
+*&---------------------------------------------------------------------*
+*& Report  ZRICH_0001
+*&
+*&---------------------------------------------------------------------*
+*&
+*&
+*&---------------------------------------------------------------------*
+
+report zrich_0001.
+
+
+
+types: begin of ttab,
+
+       rec(1000) type c,
+
+       end of ttab.
+
+
+
+types: begin of tdat,
+
+       fld1(10) type c,
+
+       fld2(10) type c,
+
+       fld3(10) type c,
+
+       end of tdat.
+
+
+
+data: itab type table of ttab with header line.
+
+data: idat type table of tdat with header line.
+
+
+
+data: file_str type string.
+
+
+
+parameters: p_file type localfile.
+
+
+
+at selection-screen on value-request for p_file.
+
+  CALL FUNCTION 'KD_GET_FILENAME_ON_F4'
+    EXPORTING
+      static    = 'X'
+    CHANGING
+      file_name = p_file.
+
+
+
+start-of-selection.
+
+
+
+  file_str = p_file.
+
+
+
+  CALL FUNCTION 'GUI_UPLOAD'
+    EXPORTING
+      filename                = file_str
+    TABLES
+      data_tab                = itab
+    EXCEPTIONS
+      file_open_error         = 1
+      file_read_error         = 2
+      no_batch                = 3
+      gui_refuse_filetransfer = 4
+      invalid_type            = 5
+      no_authority            = 6
+      unknown_error           = 7
+      bad_data_format         = 8
+      header_not_allowed      = 9
+      separator_not_allowed   = 10
+      header_too_long         = 11
+      unknown_dp_error        = 12
+      access_denied           = 13
+      dp_out_of_memory        = 14
+      disk_full               = 15
+      dp_timeout              = 16
+      others                  = 17.
+
+
+
+
+
+  loop at itab.
+
+    clear idat.
+
+    split itab-rec at ',' into idat-fld1
+
+                               idat-fld2
+
+                               idat-fld3.
+
+    append idat.
+
+
+
+  endloop.
+
+
+
+
+
+  loop at idat.
+
+    write:/ idat-fld1, idat-fld2, idat-fld3.
+
+  endloop.
