@@ -1,0 +1,340 @@
+*-----------------------------------------------------------------*
+* Program Name: Date : ZBW_FILELOAD_TO_TABLE *
+* SAP Name : Version : Version 1.0 *
+* Programmer : Sandeep Dak*
+* Last Update : 10-Jun-2010 *
+* Analyst/Specifier : Sandeep Dak*
+* Program Type : ABAP *
+*-----------------------------------------------------------------*
+* Description *
+* *
+* Program to Load the a file into a database table *
+* *
+* This program transfers the file to the server and then loads it *
+* into an internal table. The values are then loaded into the *
+* database table. *
+* *
+*-----------------------------------------------------------------*
+REPORT zbw_fileload_to_table.
+*-----------------------------------------------------------------*
+* Global Variables
+*-----------------------------------------------------------------*
+DATA: gt_file TYPE TABLE OF string,
+g_message TYPE string,
+g_lines TYPE numrows,
+g_answer TYPE c.
+*-----------------------------------------------------------------*
+* Selection Screen Parameters
+*-----------------------------------------------------------------*
+SELECTION-SCREEN BEGIN OF BLOCK b1 WITH FRAME TITLE text-001.
+
+PARAMETERS: gp_table TYPE string OBLIGATORY,
+      gp_wfile TYPE string OBLIGATORY,
+      gp_sep TYPE c OBLIGATORY DEFAULT ','.
+
+SELECTION-SCREEN END OF BLOCK b1.
+
+SELECTION-SCREEN BEGIN OF BLOCK b2 WITH FRAME TITLE text-002.
+
+PARAMETERS: gp_upd RADIOBUTTON GROUP grp DEFAULT 'X', gp_del RADIOBUTTON GROUP grp.
+
+SELECTION-SCREEN END OF BLOCK b2.
+
+*-----------------------------------------------------------------*
+* Pop-up Function to select the Windows Filename. *-----------------------------------------------------------------*
+
+AT SELECTION-SCREEN ON VALUE-REQUEST FOR gp_wfile.
+
+  DATA: l_rc TYPE sy-subrc,
+      l_filetable TYPE filetable.
+
+  FIELD-SYMBOLS:
+      <filetable> TYPE file_table.
+
+*
+* Get Filename.
+*
+
+  CALL METHOD cl_gui_frontend_services=>file_open_dialog
+    EXPORTING
+      file_filter       = '*.csv'
+      default_extension = 'csv'
+    CHANGING
+      file_table        = l_filetable
+      rc                = l_rc.
+
+  LOOP AT l_filetable ASSIGNING <filetable>.
+  ENDLOOP.
+
+  CHECK <filetable> IS ASSIGNED.
+
+  gp_wfile = <filetable>-filename.
+
+*-----------------------------------------------------------------*
+* Start of Main Program
+*-----------------------------------------------------------------*
+
+START-OF-SELECTION.
+
+*
+* Get File and load fields into table.
+*
+
+  PERFORM upload_file CHANGING gt_file.
+
+  DESCRIBE TABLE gt_file LINES g_lines. " Get The Number of Lines in the Table
+
+*
+* Pre-Delete Values from Table.
+*
+  IF gp_del = 'X'.
+    IF g_lines = 1.
+*
+* Check if you want to empty the table.
+*
+      CALL FUNCTION 'POPUP_TO_CONFIRM'
+        EXPORTING
+          titlebar              = 'Information'(003)
+          text_question         = 'The File is Empty. Do you wish to still empty the database table?'(004)
+          text_button_1         = 'Yes'(005)
+          icon_button_1         = 'ICON_OKAY'
+          text_button_2         = 'No'(006)
+          icon_button_2         = 'ICON_CANCEL'
+          display_cancel_button = ''
+        IMPORTING
+          answer                = g_answer.
+
+      IF g_answer = 2.
+        LEAVE PROGRAM.
+      ENDIF.
+    ELSE.
+*
+* Delete the records from the table.
+*
+      DELETE FROM (gp_table).
+
+      IF sy-subrc <> 0 AND sy-subrc <> 4 .
+        CONCATENATE 'Cannot delete values from table'(007) gp_table
+        INTO g_message SEPARATED BY space.
+        ROLLBACK WORK.
+        MESSAGE g_message TYPE 'E'.
+      ENDIF.
+    ENDIF.
+  ENDIF.
+
+*
+* Update Database Table.
+*
+  IF g_lines > 1.
+    PERFORM table_load TABLES gt_file.
+  ELSE.
+    CALL FUNCTION 'POPUP_TO_INFORM'
+      EXPORTING
+        titel = 'File Empty'(008)
+        txt1  = 'The File is Empty no Records to Load.'(009)
+        txt2  = ''.
+  ENDIF.
+
+END-OF-SELECTION.
+
+*-----------------------------------------------------------------*
+* End of Main Program
+*-----------------------------------------------------------------*
+
+*=================================================================*
+FORM table_load TABLES p_file.
+*=================================================================*
+
+*
+* Type for Database Field Names.
+*
+
+  TYPES: BEGIN OF t_fieldname,
+        fieldname TYPE fieldname,
+       END OF t_fieldname.
+
+*
+* Variables.
+*
+
+  DATA: lt_dd03l TYPE STANDARD TABLE OF dd03l,          " DataDictionary of Database Table
+      ltr_table TYPE REF TO data,                 " Data to input into Database Table
+      lt_fields TYPE TABLE OF t_fieldname,            " Fields in the Input File
+      lt_contents TYPE TABLE OF t_fieldname WITH HEADER LINE, " Record Contents
+      lsr_table TYPE REF TO data,                        " Database Table Structure
+      ls_record TYPE string.                  " File Record
+  FIELD-SYMBOLS:
+    <ls_dd03l> TYPE dd03l,           " Structure of DataDictionary Table
+    <ls_fields> TYPE t_fieldname,        " Table Field
+    <tablefield> TYPE ANY,           " Field of the Table
+    <db_table> TYPE table,           " Data of Database Table
+    <db_record> TYPE ANY.            " Database Table Structure
+
+*
+* Get fields of the database table.
+*
+
+  SELECT *
+  INTO CORRESPONDING FIELDS OF TABLE lt_dd03l
+  FROM dd03l
+ WHERE tabname = gp_table
+ORDER BY fieldname.
+
+  IF sy-subrc <> 0.
+    MESSAGE 'Database Table does not exist'(010) TYPE 'E'.
+  ENDIF.
+
+*
+* Create a structure definition of the database table.
+*
+  CREATE DATA lsr_table TYPE (gp_table).
+  ASSIGN lsr_table->* TO <db_record>.
+
+  CREATE DATA ltr_table TYPE TABLE OF (gp_table).
+  ASSIGN ltr_table->* TO <db_table>.
+
+*
+* Get Database Fields of the file.
+*
+  LOOP AT gt_file INTO ls_record.
+    SPLIT ls_record AT gp_sep INTO: TABLE lt_fields.
+    EXIT.
+  ENDLOOP.
+
+*
+* See if all File Fields are in the Database Table.
+*
+
+  LOOP AT lt_fields ASSIGNING <ls_fields>.
+    READ TABLE lt_dd03l WITH KEY fieldname = <ls_fields>-fieldname TRANSPORTING NO FIELDS.
+    IF sy-subrc <> 0.
+      CALL FUNCTION 'POPUP_TO_INFORM'
+        EXPORTING
+          titel = 'File Error'(011)
+          txt1  = 'The File has a mismatch of at least one field'(012)
+          txt2  = 'Check the File Header line of the Field Names'(013)
+          txt3  = 'To ensure they are correct'(014).
+      LEAVE PROGRAM.
+    ENDIF.
+  ENDLOOP.
+
+*
+* See if all Database Fields are in the file.
+*
+  LOOP AT lt_dd03l ASSIGNING <ls_dd03l>.
+    READ TABLE lt_fields WITH KEY fieldname = <ls_dd03l>-fieldname TRANSPORTING NO FIELDS.
+    IF sy-subrc <> 0.
+      DATA: g_answer TYPE c.
+      CALL FUNCTION 'POPUP_TO_CONFIRM'
+        EXPORTING
+          titlebar              = 'Information'(003)
+          text_question         = 'Not All fields will be populated in the database table. Continue ?'(015)
+          text_button_1         = 'Yes'(005)
+          icon_button_1         = 'ICON_OKAY'
+          text_button_2         = 'No'(006)
+          icon_button_2         = 'ICON_CANCEL'
+          display_cancel_button = ''
+        IMPORTING
+          answer                = g_answer.
+      IF g_answer = 2.
+        LEAVE PROGRAM.
+      ENDIF.
+    ENDIF.
+  ENDLOOP.
+
+*
+* For each Record in the file.
+*
+  LOOP AT gt_file INTO ls_record.
+    IF sy-tabix > 1. " Not Header Record.
+*
+* Get Fields of the record
+*
+      SPLIT ls_record AT gp_sep INTO: TABLE lt_contents.
+*
+* Assign the File Fields to Database structure.
+*
+      CLEAR <db_record>.
+      LOOP AT lt_fields ASSIGNING <ls_fields>. " For Each Field
+        UNASSIGN <tablefield>.
+        ASSIGN COMPONENT <ls_fields>-fieldname OF STRUCTURE <db_record> TO <tablefield>.
+        CHECK <tablefield> IS ASSIGNED.
+
+        READ TABLE lt_contents INDEX sy-tabix. " Get the Field
+
+        IF sy-subrc EQ 0.
+          <tablefield> = lt_contents.
+        ENDIF.
+      ENDLOOP.
+
+      APPEND <db_record> TO <db_table>. " Insert Field into Internal Table.
+    ENDIF.
+  ENDLOOP.
+
+*
+* Delete existing records from the database that are going to be inserted.
+*
+  MODIFY (gp_table) FROM TABLE <db_table>.
+
+  IF sy-subrc <> 0. " Could not Insert Records into Database Table
+    CONCATENATE 'Error in Update of Database Table'(016) gp_table
+    INTO g_message SEPARATED BY space.
+    MESSAGE g_message TYPE 'E'.
+    ROLLBACK WORK.
+  ELSE. " Inserted Records into Database Table
+
+    CALL FUNCTION 'POPUP_TO_INFORM'
+      EXPORTING
+        titel = 'File Load Success'(017)
+        txt1  = 'Data was Loaded in database Table'(018)
+        txt2  = 'Successfully.'(019).
+    COMMIT WORK.
+  ENDIF.
+
+*=================================================================*
+ENDFORM. " table_load
+*=================================================================*
+*=================================================================*
+FORM upload_file CHANGING p_file.
+*=================================================================*
+*
+* Upload File into table
+*
+  CALL METHOD cl_gui_frontend_services=>gui_upload
+    EXPORTING
+      filename                = gp_wfile
+      filetype                = 'ASC'
+      has_field_separator     = 'X'
+    CHANGING
+      data_tab                = p_file
+    EXCEPTIONS
+      file_open_error         = 1
+      file_read_error         = 2
+      no_batch                = 3
+      gui_refuse_filetransfer = 4
+      invalid_type            = 5
+      no_authority            = 6
+      unknown_error           = 7
+      bad_data_format         = 8
+      header_not_allowed      = 9
+      separator_not_allowed   = 10
+      header_too_long         = 11
+      unknown_dp_error        = 12
+      access_denied           = 13
+      dp_out_of_memory        = 14
+      disk_full               = 15
+      dp_timeout              = 16
+      not_supported_by_gui    = 17
+      error_no_gui            = 18
+      OTHERS                  = 19.
+
+  IF sy-subrc <> 0.
+    MESSAGE ID sy-msgid TYPE 'I' NUMBER sy-msgno
+    WITH sy-msgv1 sy-msgv2 sy-msgv3 sy-msgv4.
+    LEAVE PROGRAM.
+  ENDIF.
+
+*=================================================================
+*
+ENDFORM. " upload_file
+*=================================================================
