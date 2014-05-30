@@ -1,0 +1,133 @@
+*&---------------------------------------------------------------------*
+*& Report  ZTEST
+*&
+*&---------------------------------------------------------------------*
+*&
+*&
+*&---------------------------------------------------------------------*
+
+REPORT  ZTEST.
+
+TYPES: BEGIN OF ls_tab3,
+            SID_0CALDAY TYPE RSSID,
+            RPA_SAT     TYPE /BI0/OIRPA_SAT,
+       END OF ls_tab3.
+
+DATA: int_tab TYPE TABLE OF /BIC/B0000378000,
+      int_tab1 TYPE TABLE OF /BIC/AZART011100,
+      int_tab2 TYPE TABLE OF /BIC/AZPRT011100,
+      int_tab3 TYPE STANDARD TABLE OF ls_tab3,
+      wa_int_tab3 TYPE ls_tab3,
+      lv_cnt TYPE i VALUE 0.
+
+FIELD-SYMBOLS: <int_line> LIKE LINE OF int_tab,
+               <int_line1> LIKE LINE OF int_tab1,
+               <int_line2> LIKE LINE OF int_tab2,
+               <int_line3> LIKE LINE OF int_tab3.
+
+PARAMETERS: lv_from TYPE d, lv_to TYPE d.
+
+DATA: lv_sid_0calday TYPE c LENGTH 30,
+      lv_rpa_sat TYPE c LENGTH 30.
+
+*SELECT COUNT( * ) AS REC_CNT
+*      FROM /BIC/B0000378000
+*      INTO lv_cnt
+*     WHERE BUSINESSDAYDATE BETWEEN lv_from AND lv_to.
+*
+* WRITE: /
+*       'Data between: ', lv_from, ' and ', lv_to.
+*
+* IF sy-subrc = 0.
+*   WRITE: /
+*       'Total number of records for the selected period: ', lv_cnt.
+* ENDIF.
+
+* WRITE: /
+*       'PSA data:  --> /BIC/B0000378000'.
+*
+*    SELECT BUSINESSDAYDATE SUM( SALESAMOUNT ) AS SALESAMOUNT
+*      FROM /BIC/B0000378000
+*INTO CORRESPONDING FIELDS OF TABLE int_tab
+*     WHERE BUSINESSDAYDATE BETWEEN lv_from AND lv_to
+*  GROUP BY BUSINESSDAYDATE.
+*
+* IF sy-subrc = 0.
+*  LOOP AT int_tab ASSIGNING <int_line>.
+*    WRITE: /
+*       <int_line>-BUSINESSDAYDATE,
+*       <int_line>-SALESAMOUNT.
+*  ENDLOOP.
+* ELSE.
+*   WRITE: /
+*        'Failed request.'.
+* ENDIF.
+*
+*  WRITE: /
+*       'DSO data: ZART0111'.
+*
+*    SELECT RPA_BDD SUM( RPA_SAT ) AS RPA_SAT
+*      FROM /BIC/AZART011100
+*INTO CORRESPONDING FIELDS OF TABLE int_tab1
+*     WHERE RPA_BDD BETWEEN lv_from AND lv_to
+*  GROUP BY RPA_BDD.
+*
+* IF sy-subrc = 0.
+*  LOOP AT int_tab1 ASSIGNING <int_line1>.
+*    WRITE: /
+*       <int_line1>-RPA_BDD,
+*       <int_line1>-RPA_SAT.
+*  ENDLOOP.
+* ELSE.
+*   WRITE: /
+*        'Failed request.'.
+* ENDIF.
+
+*   WRITE: /
+*       'DSO data: ZPRT0111'.
+*
+*    SELECT RPA_BDD SUM( RPA_SAT ) AS RPA_SAT
+*      FROM /BIC/AZPRT011100
+*INTO CORRESPONDING FIELDS OF TABLE int_tab2
+*     WHERE RPA_BDD BETWEEN lv_from AND lv_to
+*  GROUP BY RPA_BDD.
+*
+* IF sy-subrc = 0.
+*  LOOP AT int_tab2 ASSIGNING <int_line2>.
+*    WRITE: /
+*       <int_line2>-RPA_BDD,
+*       <int_line2>-RPA_SAT.
+*  ENDLOOP.
+* ELSE.
+*   WRITE: /
+*        'Failed request.'.
+* ENDIF.
+*
+
+
+
+WRITE: /
+    'InfoCube data: ZRRT0211'.
+
+SELECT T~SID_0CALDAY SUM( CB~RPA_SAT ) AS RPA_SAT
+       FROM /BIC/FZRRT0211 AS CB
+       JOIN /BIC/DZRRT0211T AS T ON T~DIMID = CB~KEY_ZRRT0211T UP TO 99999 ROWS
+       INTO CORRESPONDING FIELDS OF TABLE int_tab3
+      "WHERE T~SID_0CALDAY BETWEEN lv_from AND lv_to
+   GROUP BY T~SID_0CALDAY.
+
+IF sy-subrc = 0.
+  LOOP AT int_tab3 ASSIGNING <int_line3>.
+    IF sy-subrc = 0.
+      lv_sid_0calday = <int_line3>-SID_0CALDAY.
+      lv_rpa_sat = <int_line3>-RPA_SAT.
+      REPLACE ALL OCCURRENCES OF '.' IN lv_sid_0calday WITH ''.
+      WRITE: /
+         lv_sid_0calday,
+         lv_rpa_sat.
+    ENDIF.
+  ENDLOOP.
+ELSE.
+  WRITE: /
+       'Failed request.'.
+ENDIF.
