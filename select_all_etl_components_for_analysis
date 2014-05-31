@@ -111,21 +111,19 @@ WRITE: /
 
 SELECT T~SID_0CALDAY SUM( CB~RPA_SAT ) AS RPA_SAT
        FROM /BIC/FZRRT0211 AS CB
-       JOIN /BIC/DZRRT0211T AS T ON T~DIMID = CB~KEY_ZRRT0211T UP TO 99999 ROWS
+       JOIN /BIC/DZRRT0211T AS T ON T~DIMID = CB~KEY_ZRRT0211T
        INTO CORRESPONDING FIELDS OF TABLE int_tab3
       "WHERE T~SID_0CALDAY BETWEEN lv_from AND lv_to
    GROUP BY T~SID_0CALDAY.
 
 IF sy-subrc = 0.
   LOOP AT int_tab3 ASSIGNING <int_line3>.
-    IF sy-subrc = 0.
       lv_sid_0calday = <int_line3>-SID_0CALDAY.
       lv_rpa_sat = <int_line3>-RPA_SAT.
       REPLACE ALL OCCURRENCES OF '.' IN lv_sid_0calday WITH ''.
       WRITE: /
          lv_sid_0calday,
          lv_rpa_sat.
-    ENDIF.
   ENDLOOP.
 ELSE.
   WRITE: /
