@@ -1,0 +1,40 @@
+
+PROGRAM CONVERSION_ROUTINE.
+
+* Type pools used by conversion program
+TYPE-POOLS: RSD, RSARC, RSARR.
+
+TYPES: DE_0SOURSYSTEM(000002) TYPE C.
+
+* Conversion rule for InfoObject 0SOURSYSTEM
+*     Data type       = CHAR
+*     ABAP type       = C
+*     ABAP length     = 000002
+FORM CONVERT_0SOURSYSTEM
+  USING    RECORD_NO LIKE SY-TABIX
+           SOURCE_SYSTEM TYPE RSA_LOGSYS
+           IOBJ_NAME TYPE RSIOBJNM
+  CHANGING RESULT TYPE DE_0SOURSYSTEM " InfoObject value
+           RETURNCODE LIKE SY-SUBRC.
+*$*$ begin of routine - insert your code only below this line        *-*
+  RETURNCODE = 0.
+
+* there is nothing to do if the source system ID is already filled
+* in this case it was provided by the source BW (data mart)
+  IF RESULT IS INITIAL
+   AND IOBJ_NAME = '0SOURSYSTEM'.
+*   retrieve source system ID form the source system
+    CALL FUNCTION 'RSDG_ID_GET_FROM_LOGSYS'
+         EXPORTING
+              I_SOURCE_SYSTEM = SOURCE_SYSTEM
+         IMPORTING
+              E_SOURSYSID     = RESULT
+         EXCEPTIONS
+              ID_NOT_FOUND    = 1.
+    IF SY-SUBRC <> 0.
+      RETURNCODE = 4.
+    ENDIF.
+  ENDIF.
+
+*$*$ end of routine - insert your code only before this line         *-*
+ENDFORM.
