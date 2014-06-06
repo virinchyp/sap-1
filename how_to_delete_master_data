@@ -1,0 +1,33 @@
+how to delete master data 
+
+
+Follow the below steps to delete the master data.
+
+
+1) RSA1 --> find your Info object --> right click --> maintain master data
+
+2) Select rows you want to delete and click 'Delete' icon. Then SAVE.
+
+3) If system prompt you message "some master data cannot be deleted" ... continue with this message.
+
+4) Then goto tcode SLG1 --> enter Object: RSDMD and Subobject: MD_DEL and User: your userID and press F8.
+
+5) In the next screen Expand node and double click 'Problem class additional information'
+
+6) This will give you which ever objects using SIDs of this master data.
+
+7) You should delete this SID according to that list.
+
+8) Then U should delete particular data from DSO/Cubes.
+
+Once data deleted from cube, then 
+
+9) Use Tcode RSRV -> Tests in Transaction RSRV -> All Elementary Tests -> Transaction Data -> Entries Not Used in the dimension of an InfoCube (Double Click)
+
+10) From the right side window, expand “Entries Not Used in the Dimension of an InfoCube” Node & Enter InfoCube (like 0SD_C01), click “Transfer”
+
+11) Now, click “Execute” (Toolbar)… and the results displayed in the right side window..
+
+12) Now, click “Correct error” (Toolbar)
+
+Source: http://explore-sapbw.blogspot.com/2011/12/how-to-delete-master-data.html
