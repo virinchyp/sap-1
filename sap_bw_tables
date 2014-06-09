@@ -277,6 +277,7 @@ RSPC_MONITOR 	Monitor
 	
 	
 Queries	
+RSBCTCB_QRY_T_V - view for all BEx queries - names and descriptions
 RSZELTDIR 	Directory of the reporting component elements 
 RSZELTTXT 	Texts of
 	reporting component elements 
