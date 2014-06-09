@@ -281,6 +281,7 @@ RSBCTCB_QRY_T_V - view for all BEx queries - names and descriptions
 RSZELTDIR 	Directory of the reporting component elements 
 RSZELTTXT 	Texts of
 	reporting component elements 
+V_COMPDIR_COMPIC - infocubes and reporting elements
 RSZELTXREF 	Directory of query element references 
 RSRREPDIR 	Directory of all reports (Query GENUNIID) 
 RSZCOMPDIR 	Directory of reporting components 
