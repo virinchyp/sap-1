@@ -1,0 +1,6 @@
+How to modify SAP Released transport to Unreleased status
+---------------------------------------------------------
+T-Code: 		SE38
+Execute report:	RDDIT076
+Enter transport request number: ........
+Press: F8
