@@ -1,0 +1,41 @@
+
+Re: Steps of Activating Standard Data Sources  
+
+SAP AP Steel
+  SAP AP  May 11, 2011 10:15 PM  (in response to Muhammad Naguib)  
+
+
+
+1) Go to transaction code RSA3 and see if any data is available related to your DataSource. If data is there in RSA3 then go to transaction code LBWG (Delete Setup data) and delete the data by entering the application name. 
+
+ 
+
+2) Go to transaction SBIW --> Settings for Application Specific Datasource --> Logistics --> Managing extract structures --> Initialization --> Filling the Setup table --> Application specific setup of statistical data --> perform setup (relevant application) 
+
+In OLI*** (for example OLI7BW for Statistical setup for old documents : Orders) give the name of the run and execute. Now all the available records from R/3 will be loaded to setup tables. 
+
+ 
+
+3) Go to transaction RSA3 and check the data. 
+
+ 
+
+4) Go to transaction LBWE and make sure the update mode for the corresponding DataSource is serialized V3 update. 
+
+ 
+
+5) Go to BW system and create infopackage and under the update tab select the initialize delta process. And schedule the package. Now all the data available in the setup tables are now loaded into the data target. 
+
+ 
+
+6) Now for the delta records go to LBWE in R/3 and change the update mode for the corresponding DataSource to Direct/Queue delta. By doing this record will bypass SM13 and directly go to RSA7. Go to transaction code RSA7 there you can see green light # Once the new records are added immediately you can see the record in RSA7. 
+
+ 
+
+7) Go to BW system and create a new infopackage for delta loads. Double click on new infopackage. Under update tab you can see the delta update radio button. 
+
+ 
+
+8) Now you can go to your data target and see the delta record.
+
+Source: http://scn.sap.com/thread/1952073
