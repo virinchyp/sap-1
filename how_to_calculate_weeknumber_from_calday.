@@ -1,0 +1,13 @@
+REPORT  ZTES_CALDAY_TO_WEEK_NUMBER.
+
+data: week type  scal-week.
+
+call function 'DATE_GET_WEEK'
+     exporting
+          date = sy-datum
+     importing
+          week = week.
+
+
+
+write:/ sy-datum, 'is in week', week+4(2).
