@@ -1,0 +1,62 @@
+*TYPES for structure of internal table to be selected into 
+TYPES: BEGIN OF i_fund_data, 
+               doc_number TYPE /bic/azpu_o0100-doc_number, 
+               s_ord_item TYPE /bic/azpu_o0100-s_ord_item, 
+               cmmt_item TYPE /bic/azpu_o0100-cmmt_item, 
+               funds_ctr TYPE /bic/azpu_o0100-funds_ctr, 
+               fund TYPE /bic/azpu_o0100-fund, 
+               pu_measure TYPE /bic/azpu_o0100-pu_measure, 
+               func_area TYPE /bic/azpu_o0100-func_area, 
+             END OF i_fund_data. 
+
+*Internal table - setup as hashed assuming document and item are going to be unique and this will 
+*automatically sort the internal table 
+DATA: i_s_fund_data TYPE HASHED TABLE OF i_fund_data 
+          WITH UNIQUE KEY doc_number s_order_item. 
+
+*Work area that is structured like row of internal table 
+DATA: i_t_fund_data TYPE i_fund_data. 
+
+* Read required FM Fields from DSO ZPU_O01 
+select 
+  doc_number 
+  s_ord_item 
+  cmmt_item 
+  funds_ctr 
+  fund 
+  pu_measure 
+  pu_measure 
+  func_area 
+from 
+  /bic/azpu_o0100 
+into table 
+  i_s_fund_data 
+for all entries in result_package 
+where 
+  doc_number = result_package-doc_number 
+  and s_ord_item = result_package-s_ord_item. 
+
+* Loop through the package row by row 
+LOOP AT result_package ASSIGNING <result_fields>. 
+
+  READ TABLE 
+    i_s_fund_data 
+  INTO 
+    i_t_fund_data 
+  WITH KEY 
+    doc_number = <result_fields>-doc_number 
+    s_ord_item = <result_fields>-s_ord_item. 
+
+  IF sy-subrc EQ 0. 
+
+    MOVE: i_t_fund_data-cmmt_item TO <result_fields>-cmmt_item, 
+                i_t_fund_data-funds_ctr TO <result_fields>-funds_ctr, 
+                i_t_fund_data-fund TO <result_fields>-fund, 
+                i_t_fund_data-pu_measure TO <result_fields>-pu_measure, 
+                i_t_fund_data-func_area TO <result_fields>-func_area. 
+
+  ENDIF. 
+
+ENDLOOP. 
+
+" Source: http://scn.sap.com/thread/1363162 
