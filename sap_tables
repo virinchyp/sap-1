@@ -183,3 +183,5 @@ LIKP : Delivery Table(Header Data) (VBELN, LFART, KUNNR, WADAT, INCOL)
  KEKO: Product Costing Header Data
  ANLH: Main Asset Number
  ANLA, ANLB, ANLC : Segment Assets Masters 
+
+Source: DETERING Consulting
