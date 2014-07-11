@@ -1,0 +1,185 @@
+ECC Tables: 
+
+MM MODULE
+
+ CYCLE:
+ Purchase Requisition (PR) Request for Quotation (RFQ) (Vendor Evaluation)
+ Purchase Order (PO) Goods Receipt Note (GRN) Invoice Verification Data to FI
+
+ Tables and important Fields.
+
+ LFA1 – vendor data (LIFNR)
+ LFB1 -- Company Code Segment : Vendor Data(LIFNR, BUKRS)
+ LFC1 -- FI Related Vendor Data (LIFNR, BELNR)
+ LFM1 – Pur. Orgn. Related Vendor Data (LIFNR, EKORG)
+
+ MARA – Material Master (MATNR)
+ MARC – Material Master with Plant Data (MATNR, WERKS)
+ MARD – Material Master with Storage Location Data (MATNR, LGORT, WERKS)
+ MAKT – Material Master Material Descriptions (MATNR, MATKL)
+ MBEW – Material Valuation Data (MATNR, BWTAR)
+ MVKE – Material Master : Sales related Data
+ MDKP, MDTB – MRP related Data( Header, Item)
+ MCHA, MCHB – Material Batches (Header, Item) (MATNR, WERKS, LGORT, CHARG)
+
+ EBAN – Pur. Req. Data( BANFN, BNFPO, BADAT, MATNR)
+ EINA – Purchase Info. Record(General Data)(INFNR, MATNR, LIFNR)
+ EINE – Purchase Info. Record (pur. Orgn. Data) (INFNR, EKORG)
+ ELBK, ELBN, ELBP – Vendor Evaluation Related Data
+ EKKO – PO Data (Header) (EBELN, BSTYP, BSART)
+ EKPO – PO Data (Item) (EBELN, EBELP, MATNR)
+ Pur. Req., RFQ and PO are differentiated by Doc Type (BSTYP) in EKKO table.
+ For RFQ it is ‘A’ and for PO it is ‘F’
+MKPF – GRN Data (Header) (EBELN, BLDAT, BUDAT, XBLNR, BKTXT)
+ MSEG – GRN Data(Item) MBLNR, BWART, LIFNR, MATNR, EBELN)
+ Apart from this there are lot of tables which begin with ‘M’ & ‘E’, but we
+ use the following very often.
+ EQUK – Quota (Header)(QUNUM, MATNR)
+ EQUP – Quota (Item) (QUNUM, QUPOS, LIFNR)
+ EKBE – PO History Data (EBELN, EBELP, BELNR, BLDAT, MATNR, VGABE)
+ EKBZ – PO History with Delivery Costs(EBELN, BELNR, LIFNR, XBLNR)
+ EKET – Schedule lines data of a PO(EBELN, EINDT, SLFDT)
+ EKES – Vendor Confirmations Data (EBELN, EBTYP, EINDT, XBLNR)
+ T163F – Confirmation Texts (EBTYP, EBTXT)
+ T156 – Movement Types (BWARE)
+ T024 – Purchasing Groups
+ T024E – Purchase Organizations
+ T163 – Item Category’s in Purchasing Documents(PSTYP)
+ T149D – Valuation Types
+ T134 – Material Types
+ FVLK – Delivery Types
+ STKO, STPO – BOM(Bill Of Material) related Data (Header & Item)
+ STPU, STPN, STST, STZU – BOM Related Tables
+ RKPF, RBKP, RSEG (Header & Item) – MM – FI Related Data
+ KONO, KONH – Pricing data
+ T006 – Basic Unit Of Measurements
+
+
+ SALES & DISTRIBUTION MODULE RELATED TABLES :
+
+ Cycle:
+ Enquiry  Quotation  Sales Order  Delivery(Picking, Packing, Post Goods Issue and Shipment)  Billing  Data to FI.
+
+ TABLES and Important Fields :
+ VBAK : Sales Document(Header Data) (VBELN)
+ VBAP : Sales Document(Item Data) (VBELN, POSNR, MATNR, ARKTX, CHARG)
+ Enquiry, Quotation, Sales Order are differentiated based on Doc.
+ Type(VBTYP Field) in VBAK, VBAP Tables for Enquiry VBTYP = A, for Quotation ‘B’ & for Order it is ‘C’.)
+LIKP : Delivery Table(Header Data) (VBELN, LFART, KUNNR, WADAT, INCOL)
+ LIPS : Delivery Table(Item Data)(VBELN, POSNR, WERKS, LGORT, MATNR, VGBEL)
+ (LIPS – VBGELN = VBAK- VBELN, LIPS-VGPOS = VBAP-POSNR)
+ VTTK : Shipment Table(Header Data) (TKNUM)
+ VTTP : Shipment Table (Item Data)(TKNUM, TPNUM, VBELN)
+ (VTTP – VBELN = LIKP – VBELN)
+ VBRK : Billing Table(Header Data) (VBELN, FKART, BELNF)
+ VBRP : Billing Table(Item Data) (VBELN, POSNR, FKIMG, NEWR, VGBEL, VGPOS)
+ (VERP – AUBEL = VBAK- VBELN, VBRP – VBEL = LIKP – VBELN)
+ Apart from these tables there are lot of other tables which starts with ‘V’, but we use the
+ following tables frequently.
+ VBUK: All Sales Documents status & Admn. Data(Header) (VBELN, VBTYP)
+ VBTYP = ‘C’ (Sales Order) VBTYP = ‘L’(Delivery) VBTYP = ‘M’(Invoice)
+ VBUP: Sales Documents status & Admin. Data(Item) (VBELN, POSNR)
+ VBEP : Sales Document Schedule Lines Data (VBELN, POSNR, EDATU, WMENG)
+ VBKD: To get sales related Business data like Payment terms etc.(VBELN, ZTERM)
+ VBFA: Sales Document flow data(VBELV, VBELN, POSNV, VBTYP)
+ VBPA: Partner functions Data(VBELN, PARVW, KUNNR, LIFNR)
+ TVLKT: Delivery Type: Texts(LFART, VTEXT)
+ KNA1, KNB1, KNC1 : Customer Master Data and Other Partner’s Data(KUNNR, 
+ NAME1,LAND1)
+ KNVK: Customer Master Contact Person(PARNR, KUNNR)
+ KNVV: Customer Master Sales Data.
+ LFA1, LFB1, LFC1: Vendor Master Data(To get Transporter data)(LIFNR, NAME1, ORT01)
+ MARA, MARC, MARD : Material Master Data(Basic, Plant, St. Location Views)
+ TVKO: Sales Organizations(VKORG)
+ TVKOV: Distribution Channels(VTWEG)
+ TVTA: Divisions(SPART)
+ TVKBZ: Sales Office(VKBUR)
+ TVBVK: Sales Group(VKGRP)
+ T077D: Customer Account Group(KTOKD)
+ T001W: Plants(WERKS)
+ T001L: Storage Locations(LGORT)
+ TWLAD: To get address of Storage Location and Plant(LGORT, ADRNR)
+ TVAU: Sales Document (Order) Types
+ KONV: Condition Types (pricing) (KNUMV, KSCHL, KWETR)
+ T685T: Condition Types Texts.
+ ADRC: To get Addresses of Partners
+ VBBE, VBBS: Sales Requirements Data
+ VBKA: Sales Activities Data
+ VBPV: Sales Document Product Proposal
+
+ PP & PM Module
+
+ AFKO: PP Order Header Data
+ AFPO: PP Order Item Data
+ AFVV: Order Operations Data Qty/Date/Values
+ AFVC: Operations within an Order
+ AFRU: Order Completion Confirmation
+ CSLA: Activity Types Master Data
+ CSLT: Activity Types Texts
+ KAKO: Capacity Header Segment
+ CRHD: Work Center Header Data
+ AUFK: Order Master Data
+ AFIH: Maintenance Order Header
+ AUFM: Goods Movement For Order
+ EQUI: Equipment Master Data
+ EQKT: Equipment Texts
+ ILOA: PM Object Location
+ T024I: Maintenance Planner Groups
+ T357: Plant Section
+ IFLO: Functional Location Text
+ IHSG: Permits in PM
+ IHGNS: Permit segment in PM
+ T357G_T: Permit Text
+ RESB: Reservation / Dependent requirement
+ V_EQUI: View for Equipment description
+ VIAUFKS: View for Order and Equipment Data
+ CAVFVD: Work Center Text.
+ VIQMEL: Notification Header View
+ VIQMFEL: PM Notification View
+ VIQMMA, VIQMSM : Views for Activities and Tasks
+
+
+ FI/CO Module
+
+ T001: Company Codes
+ T002: Language Keys
+ T003: FI Document Types
+ T004: Chart Of Accounts
+ T005: Country Keys
+ T007A: Tax Keys
+ T012: House Banks
+ TKA01: Controlling Areas
+ SKA1, SKB1: G/L Account Master data
+ SKAT : G/L Accounts Texts
+ KNBK: Customer Master(Bank Details)
+ LFBK: Vendor Master (Bank Details)
+ BKPF: Accounting Doc. Header
+ BSEG: Accounting Doc. Item(Cluster Table)
+ BSIS: G/L Open Items
+ BSAS: G/L Closed Items
+ BSID: Customer Open Items(Account Receivables)
+ BSAD: Customer Closed Items)(Account Receivables)
+ BSIK: Vendor Open Items(Account Payables)
+ BSAK: Vendor Closed Items(Account Payables)
+ BKPF and BSEG Tables consists of data from BSIS, BSAS, BSID, BSAD, BSIK, and BSAK tables.
+ BSET: Tax Information
+ BSEC: One Time Vendor Records
+ CSKS: Cost Center Master
+ CSKT: Cost Center Texts
+ CSSK: Cost Center/ Cost Element Relations
+ GLPCA: EC-PCA: Actual Line Items
+ GLPCT: EC-PCA: Totals Table
+ COEP: Co-Object Line Items by Period
+ COST: Co-Object Price Totals
+ CSSL: Cost Center- Activity Type
+ CRCO: Work Center- Cost Center Assignment
+ CSLA: Activity Types Master(LSTAR)
+ CSKB: Cost Elements(KSTAR, KOKRS)
+ COSS: Cost Totals(OBJNR, KSTAR)
+ COBL: Coding Block
+ CEPC: Profit Center Master Data
+ BNKA: Master Records of banks
+ TBSL: Posting Keys
+ KEKO: Product Costing Header Data
+ ANLH: Main Asset Number
+ ANLA, ANLB, ANLC : Segment Assets Masters 
