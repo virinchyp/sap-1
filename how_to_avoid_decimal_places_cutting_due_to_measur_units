@@ -1,0 +1,7 @@
+Please take this unit to table T006 and check two fields ANDEC and DECAN.
+
+If they are set to 0, then it should be the reason why decimal is cut off.
+
+To change this setting, go to SPRO ->SAP NetWeaver -> General Settings -> Check Units of Measurement, for the unit, change "Decimal places" and "Decimal pl. rounding" to 3.
+
+Source: http://scn.sap.com/thread/2062559
