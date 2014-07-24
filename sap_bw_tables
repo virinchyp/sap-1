@@ -343,6 +343,8 @@ RSDKYF	Key
 RSDTIM	Time
 	Characteristics 
 RSDUNI	Units
+
+V_CMP_JOIN - view for KeyFigures (RKF and CKF)
 	
 	
 InfoCube	
