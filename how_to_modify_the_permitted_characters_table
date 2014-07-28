@@ -1,0 +1,3 @@
+Table: RSALLOWEDCHAR
+Data element: ALLOWDCHAR --> to be  modified to CHAR with length 255
+Field: ALLOWCHAR
